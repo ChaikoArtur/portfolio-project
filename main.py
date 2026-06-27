@@ -1,5 +1,6 @@
 import os
 import time
+import re
 from portfolio import Portfolio
 
 
@@ -21,23 +22,29 @@ def progress_bar():
         time.sleep(0.08)
 
     print("\n")
+    input("Enter чтобы продолжить...")
 
 
 def menu():
-    print("\n" + "=" * 45)
-    print("        📌 ПОРТФОЛИО 'ОБО МНЕ'")
-    print("=" * 45)
+    print("\n" + "=" * 55)
+    print("           📌 PORTFOLIO | ABOUT ME")
+    print("=" * 55)
     print("1. 👤 О себе")
     print("2. 🎯 Цель")
     print("3. 📖 История")
     print("4. 🧑‍🏫 Ментор")
-    print("5. 📈 Прогресс (текст)")
+    print("5. 📈 Прогресс")
     print("6. 🎮 Хобби")
     print("7. 💼 Работы")
     print("8. 🔗 GitHub")
-    print("9. 🚀 Прогресс-бар (вау)")
+    print("9. 🚀 Прогресс-бар")
     print("0. ❌ Выход")
-    print("=" * 45)
+    print("=" * 55)
+
+
+# 🔥 REGEX проверка ввода
+def valid_choice(choice):
+    return re.fullmatch(r"[0-9]", choice) is not None
 
 
 def main():
@@ -50,6 +57,12 @@ def main():
         menu()
 
         choice = input("Выберите пункт: ")
+
+        # ❌ защита от неправильного ввода
+        if not valid_choice(choice):
+            print("❌ Ошибка: вводи только цифры от 0 до 9")
+            input("Enter...")
+            continue
 
         if choice == "1":
             p.show_about()
@@ -70,10 +83,8 @@ def main():
         elif choice == "9":
             progress_bar()
         elif choice == "0":
-            print("Выход...")
+            print("👋 Выход из программы...")
             break
-        else:
-            print("Неверный ввод!")
 
         input("\nEnter чтобы продолжить...")
 
